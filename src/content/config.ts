@@ -1,16 +1,21 @@
-import { defineCollection, z } from 'astro:content';
+// https://docs.astro.build/en/guides/content-collections/
+import { defineCollection, z } from 'astro:content'
 
-const blog = defineCollection({
+const postCollection = defineCollection({
 	type: 'content',
-	// Type-check frontmatter using a schema
-	schema: z.object({
-		title: z.string(),
-		description: z.string(),
-		// Transform string to Date object
-		pubDate: z.coerce.date(),
-		updatedDate: z.coerce.date().optional(),
-		heroImage: z.string().optional(),
-	}),
-});
+	schema: ({ image }) =>
+		z.object({
+			title: z.string(),
+			subtitle: z.string().optional(),
+			draft: z.boolean(),
+			date: z.date(),
+			image: z
+				.string()
+				.transform((path) => `/public/${path}`)
+				.pipe(image()),
+		}),
+})
 
-export const collections = { blog };
+export const collections = {
+	posts: postCollection,
+}

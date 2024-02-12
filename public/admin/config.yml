@@ -1,0 +1,45 @@
+backend:
+  name: github
+  repo: dorukgezici/astro-decap-cms-oauth
+  branch: main
+  site_domain: astro-decap-cms-oauth.vercel.app
+  base_url: https://astro-decap-cms-oauth.vercel.app
+  auth_endpoint: oauth
+
+local_backend: true
+
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: "posts"
+    label: "Posts"
+    label_singular: "Post"
+    folder: "src/content/posts"
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{title}} -- {{year}}/{{month}}/{{day}}"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string", tagname: "h1" }
+      - { label: "Subtitle", name: "subtitle", widget: "string", tagname: "h2" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - {
+          label: "Publish Date",
+          name: "date",
+          widget: "datetime",
+          date_format: "YYYY-MM-DD",
+          time_format: "HH:mm",
+          picker_utc: true,
+        }
+      - label: "Cover Image"
+        name: "image"
+        widget: "image"
+        tagname: ""
+
+      - {
+          label: "Body",
+          name: "body",
+          widget: "markdown",
+          hint: "Main content goes here.",
+        }
